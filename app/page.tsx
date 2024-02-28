@@ -1,10 +1,14 @@
-import { createToDo } from "./api";
+import FormStatus from "@/components/FormStatus";
+import { createToDo, getToDos } from "./api";
 
-export default function Home() {
+export default async function Home() {
+  const todos = await getToDos();
+
   return (
     <main className="m-8">
       <h1 className="font-bold my-4">Hello World!</h1>
-      <form className="flex flex-col gap-y-2" action={createToDo}>
+      <form className="flex flex-col gap-y-2 mb-8" action={createToDo}>
+        <FormStatus />
         <label htmlFor="name">Add a To-Do:</label>
         <input
           id="name"
@@ -20,6 +24,20 @@ export default function Home() {
           Save
         </button>
       </form>
+      {!!todos && todos.length > 0 && (
+        <>
+          <h2 className="font-bold my-2">My Todos</h2>
+          <ol className="flex flex-col list-decimal mx-8">
+            {todos.map((t, i) => (
+              <li key={i}>
+                <a className="underline" href={`/${t.id}`}>
+                  {t.name}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
     </main>
   );
 }

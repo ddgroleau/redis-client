@@ -1,3 +1,4 @@
+import FormStatus from "@/components/FormStatus";
 import { deleteToDo, getToDo, updateToDo } from "../api";
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -11,6 +12,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         className="flex flex-col gap-y-4"
         action={updateToDo}
       >
+        <FormStatus />
         <label htmlFor="newName">Description:</label>
         <input
           id="newName"
@@ -22,6 +24,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <input name="id" type="hidden" value={todo.id} />
       </form>
       <form id="deleteToDo" action={deleteToDo}>
+        <FormStatus />
         <input name="id" type="hidden" value={todo.id} />
       </form>
       <div className="flex gap-x-4">

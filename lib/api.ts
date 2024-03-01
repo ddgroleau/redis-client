@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { Todo } from "./Todo";
+import { Todo } from "./models/Todo";
 import { revalidateTag } from "next/cache";
 
 const baseUri = process.env.API_BASE_URI;

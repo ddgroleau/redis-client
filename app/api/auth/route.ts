@@ -6,6 +6,7 @@ export async function GET(request: Request) {
   const idToken = await getTokenCookie();
   const code = searchParams.get("code");
   const error = searchParams.get("error");
+  const errorDescription = searchParams.get("error_description");
   const returnUri =
     searchParams.get("returnUri") ?? searchParams.get("state") ?? "/";
 
@@ -24,8 +25,9 @@ export async function GET(request: Request) {
     if (response && response.idToken) {
       redirect(returnUri ?? "/");
     }
-  } else if (!code || !!error) {
+  } else if (!code && !error) {
     await redirectToAuth(returnUri);
   }
-  redirect("/");
+  console.error(error, errorDescription);
+  redirect("/error");
 }
